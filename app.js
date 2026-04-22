@@ -14,7 +14,8 @@ const state = {
   readingList: [],
   readingIndex: 0,
   wrongbook: { vocab: [], hardSentences: [] },
-  saveTimer: null
+  saveTimer: null,
+  nextQuestionTimer: null
 };
 
 const el = {
@@ -135,6 +136,11 @@ function switchTab(tab) {
 }
 
 function renderVocabQuestion() {
+  if (state.nextQuestionTimer) {
+    clearTimeout(state.nextQuestionTimer);
+    state.nextQuestionTimer = null;
+  }
+
   const question = state.vocab[state.vocabIndex % state.vocab.length];
   state.currentQuestion = question;
   const options = shuffle([question.correct, ...question.distractors]).slice(0, 4);
@@ -146,6 +152,7 @@ function renderVocabQuestion() {
   options.forEach((option, i) => {
     const button = document.createElement("button");
     button.className = "option-btn";
+    button.dataset.value = option;
     button.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
     button.addEventListener("click", () => handleSelect(option, button));
     el.options.appendChild(button);
@@ -168,7 +175,7 @@ function handleSelect(selected, button) {
     el.feedback.innerHTML = '<span class="ok">正确，自动进入下一题...</span>';
   } else {
     button.classList.add("wrong");
-    const answerBtn = buttons.find((b) => b.textContent.includes(question.correct));
+    const answerBtn = buttons.find((b) => b.dataset.value === question.correct);
     if (answerBtn) answerBtn.classList.add("correct");
     state.wrong += 1;
     el.feedback.innerHTML = `<span class="err">错误，正确答案：${escapeHTML(question.correct)}。已加入错题本并自动下一题。</span>`;
@@ -178,7 +185,7 @@ function handleSelect(selected, button) {
   el.correct.textContent = String(state.correct);
   el.wrong.textContent = String(state.wrong);
 
-  setTimeout(() => {
+  state.nextQuestionTimer = setTimeout(() => {
     state.vocabIndex = (state.vocabIndex + 1) % state.vocab.length;
     renderVocabQuestion();
     queueSaveProfile();
