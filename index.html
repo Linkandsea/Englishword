@@ -163,7 +163,10 @@
           <div class="analysis-original-wrap">
             <div class="q-row stretch">
               <h4>原文</h4>
-              <button id="next-analysis" class="ghost-btn">换一句</button>
+              <div class="analysis-actions">
+                <button id="hold-translate" class="ghost-btn">长按看译文</button>
+                <button id="next-analysis" class="ghost-btn">换一句</button>
+              </div>
             </div>
             <p id="analysis-sentence" class="analysis-sentence"></p>
           </div>
@@ -171,7 +174,7 @@
           <div class="analysis-translation-wrap">
             <div class="q-row stretch">
               <h4>翻译</h4>
-              <button id="hold-translate" class="ghost-btn">长按显示翻译</button>
+              <span class="analysis-tip">松开按钮可回到原文</span>
             </div>
             <p id="analysis-cn" class="analysis-translation"></p>
           </div>

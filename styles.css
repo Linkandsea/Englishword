@@ -376,9 +376,31 @@ button { font-family: inherit; }
   background: var(--card);
 }
 
+.analysis-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.analysis-tip {
+  font-size: 13px;
+  color: var(--muted);
+}
+
 .analysis-sentence { margin: 10px 0 2px; line-height: 1.65; font-size: 18px; }
-.analysis-translation { margin: 10px 0 2px; line-height: 1.65; display: none; }
-.analysis-translation-wrap.show-translation .analysis-translation { display: block; }
+.analysis-translation-wrap {
+  display: none;
+}
+
+#tab-analysis.analysis-mode-translation .analysis-original-wrap {
+  display: none;
+}
+
+#tab-analysis.analysis-mode-translation .analysis-translation-wrap {
+  display: block;
+}
+
+.analysis-translation { margin: 10px 0 2px; line-height: 1.65; display: block; }
 
 .pill {
   border: 1px solid var(--line);

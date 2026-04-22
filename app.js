@@ -52,6 +52,7 @@ const el = {
   analysisStructure: document.getElementById("analysis-structure"),
   analysisSteps: document.getElementById("analysis-steps"),
   analysisCn: document.getElementById("analysis-cn"),
+  analysisPanel: document.getElementById("tab-analysis"),
   analysisTranslationWrap: document.querySelector(".analysis-translation-wrap"),
   holdTranslate: document.getElementById("hold-translate"),
   nextAnalysis: document.getElementById("next-analysis"),
@@ -358,13 +359,13 @@ function bindHoldTranslateEvents() {
 }
 
 function showAnalysisTranslation() {
-  el.analysisTranslationWrap.classList.add("show-translation");
-  el.holdTranslate.textContent = "已显示翻译";
+  el.analysisPanel.classList.add("analysis-mode-translation");
+  el.holdTranslate.textContent = "松开回原文";
 }
 
 function hideAnalysisTranslation() {
-  el.analysisTranslationWrap.classList.remove("show-translation");
-  el.holdTranslate.textContent = "长按显示翻译";
+  el.analysisPanel.classList.remove("analysis-mode-translation");
+  el.holdTranslate.textContent = "长按看译文";
 }
 
 function renderTranslation() {
