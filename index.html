@@ -3,65 +3,150 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07c160">
+  <meta name="theme-color" content="#0ea75a">
   <title>CET4 Sprint</title>
   <link rel="manifest" href="./manifest.json">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-card">
+      <div class="loading-dot"></div>
+      <p>正在加载学习空间...</p>
+    </div>
+  </div>
+
   <div class="app-shell">
     <header class="topbar">
       <div class="brand-block">
         <div class="logo-dot" aria-hidden="true"></div>
         <div>
           <h1 class="brand-title">CET4 Sprint</h1>
-          <p class="brand-sub">鍥涚骇璇嶆眹璁粌绯荤粺</p>
+          <p class="brand-sub">四级词汇 · 游戏化学习系统</p>
         </div>
       </div>
-      <div class="status-pill">
-        <span class="dot"></span>
-        <span>瀛︿範涓?/span>
+
+      <div class="top-actions">
+        <div class="status-pill">
+          <span class="dot"></span>
+          <span id="study-status">学习中</span>
+        </div>
+        <button id="theme-toggle" class="ghost-btn">深色模式</button>
       </div>
     </header>
 
     <div class="workspace">
-      <aside class="side-nav" aria-label="涓昏鍔熻兘">
-        <button class="nav-btn active" data-tab="vocab">璇嶆眹閫夋嫨</button>
-        <button class="nav-btn" data-tab="analysis">闀块毦鍙ュ垎鏋?/button>
-        <button class="nav-btn" data-tab="translate">涓嫳浜掕瘧</button>
-        <button class="nav-btn" data-tab="reading">闃呰绮捐</button>
-        <button class="nav-btn" data-tab="wrongbook">閿欓鏈?/button>
+      <aside class="side-nav" aria-label="主要功能">
+        <button class="nav-btn active" data-tab="home">首页</button>
+        <button class="nav-btn" data-tab="vocab">词汇练习</button>
+        <button class="nav-btn" data-tab="analysis">长难句</button>
+        <button class="nav-btn" data-tab="translate">互译训练</button>
+        <button class="nav-btn" data-tab="reading">阅读精读</button>
+        <button class="nav-btn" data-tab="wrongbook">错题本</button>
       </aside>
 
       <main class="panel-area" aria-live="polite">
-        <section id="tab-vocab" class="tab-panel active">
+        <section id="tab-home" class="tab-panel active">
+          <div class="hero">
+            <div>
+              <h2>一站式四级学习控制台</h2>
+              <p>单词、长难句、翻译、阅读与错题管理全部打通，支持手机和电脑同步使用。</p>
+            </div>
+            <div class="hero-badges">
+              <div class="hero-badge"><span id="home-word-count">0</span><small>词汇总量</small></div>
+              <div class="hero-badge"><span id="home-mode-count">5</span><small>学习模式</small></div>
+              <div class="hero-badge"><span id="home-streak">0</span><small>连续打卡天数</small></div>
+            </div>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card">
+              <h3>单词库浏览</h3>
+              <p>按难度和首字母筛选，快速进入目标词汇段。</p>
+            </article>
+            <article class="feature-card">
+              <h3>学习卡片</h3>
+              <p>翻卡切题动效 + 键盘快捷键，提升刷题节奏。</p>
+            </article>
+            <article class="feature-card">
+              <h3>学习统计</h3>
+              <p>进度条与正确率可视化，学习状态一眼可见。</p>
+            </article>
+            <article class="feature-card">
+              <h3>语音发音</h3>
+              <p>单词支持原声播放，强化听觉记忆。</p>
+            </article>
+          </div>
+
+          <div class="home-stats">
+            <div>
+              <h4>学习完成度</h4>
+              <div class="progress-track"><div id="stat-completion" class="progress-fill"></div></div>
+            </div>
+            <div>
+              <h4>答题正确率</h4>
+              <div class="progress-track"><div id="stat-accuracy" class="progress-fill"></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="tab-vocab" class="tab-panel">
           <div class="section-head">
-            <h2>璇嶆眹閫夋嫨棰?/h2>
-            <p>绛斿鑷姩涓嬩竴棰橈紝绛旈敊鑷姩鍔犲叆閿欓鏈?/p>
+            <h2>词汇练习</h2>
+            <p>游戏化答题界面，支持进度条、成就徽章与快捷键（1/2/3/4 选项，S 发音）</p>
+          </div>
+
+          <div class="toolbar">
+            <label>难度
+              <select id="filter-level">
+                <option value="all">全部</option>
+                <option value="easy">简单</option>
+                <option value="medium">中等</option>
+                <option value="hard">困难</option>
+              </select>
+            </label>
+            <label>分组
+              <select id="filter-group">
+                <option value="all">全部</option>
+                <option value="A-E">A-E</option>
+                <option value="F-J">F-J</option>
+                <option value="K-O">K-O</option>
+                <option value="P-T">P-T</option>
+                <option value="U-Z">U-Z</option>
+              </select>
+            </label>
           </div>
 
           <div class="stats">
-            <div><span>鎬婚鏁?/span><strong id="v-total">0</strong></div>
-            <div><span>褰撳墠</span><strong id="v-index">0</strong></div>
-            <div><span>姝ｇ‘</span><strong id="v-correct">0</strong></div>
-            <div><span>閿欒</span><strong id="v-wrong">0</strong></div>
+            <div><span>题库量</span><strong id="v-total">0</strong></div>
+            <div><span>当前题</span><strong id="v-index">0</strong></div>
+            <div><span>正确</span><strong id="v-correct">0</strong></div>
+            <div><span>错误</span><strong id="v-wrong">0</strong></div>
+            <div><span>连击天数</span><strong id="v-streak">0</strong></div>
           </div>
 
-          <div class="question-area">
+          <div class="progress-wrap">
+            <div class="progress-track"><div id="vocab-progress-bar" class="progress-fill"></div></div>
+            <small id="vocab-progress-text">0%</small>
+          </div>
+
+          <ul id="achievement-list" class="achievement-list"></ul>
+
+          <article id="vocab-card" class="question-area">
             <div class="q-row">
               <div class="q-word" id="q-word">loading...</div>
-              <button id="speak-btn" class="ghost-btn">鍙戦煶</button>
+              <button id="speak-btn" class="ghost-btn">发音</button>
             </div>
-            <p class="q-tip">璇烽€夋嫨鏈€鍑嗙‘鐨勪腑鏂囬噴涔?/p>
+            <p class="q-tip">请选择最准确的中文释义</p>
             <div id="options" class="option-list"></div>
             <div id="q-feedback" class="feedback"></div>
-          </div>
+          </article>
         </section>
 
         <section id="tab-analysis" class="tab-panel">
           <div class="section-head">
             <h2>长难句分析</h2>
-            <p>先看分析，再看原文，长按查看翻译</p>
+            <p>分析在上，原文在中；翻译在原文下方，长按按钮显示翻译。</p>
           </div>
 
           <div class="analysis-grid">
@@ -94,45 +179,45 @@
 
         <section id="tab-translate" class="tab-panel">
           <div class="section-head">
-            <h2>涓嫳浜掕瘧璁粌</h2>
-            <p>鍏堣嚜宸辩炕璇戯紝鍐嶆煡鐪嬪弬鑰冪瓟妗?/p>
+            <h2>中英互译训练</h2>
+            <p>先翻译再校对，支持难句收藏到错题本。</p>
           </div>
 
           <div class="q-row stretch">
             <div id="tr-direction" class="pill"></div>
-            <button id="next-translate" class="ghost-btn">鎹㈤</button>
+            <button id="next-translate" class="ghost-btn">换题</button>
           </div>
 
           <p id="tr-prompt" class="translate-prompt"></p>
-          <textarea id="tr-answer" placeholder="鍦ㄨ繖閲岃緭鍏ヤ綘鐨勭炕璇?.."></textarea>
+          <textarea id="tr-answer" placeholder="在这里输入你的翻译..."></textarea>
 
           <div class="q-row">
-            <button id="check-translate" class="solid-btn">鏌ョ湅鍙傝€?/button>
-            <button id="mark-hard" class="ghost-btn">鍔犲叆闅惧彞鏈?/button>
+            <button id="check-translate" class="solid-btn">查看参考</button>
+            <button id="mark-hard" class="ghost-btn">加入难句本</button>
           </div>
           <div id="tr-ref" class="feedback"></div>
         </section>
 
         <section id="tab-reading" class="tab-panel">
           <div class="section-head">
-            <h2>闃呰绮捐</h2>
-            <p>鑻辨枃鍘熸枃銆佷腑鏂囩炕璇戜笌閲嶇偣璇嶆眹鍚屾鏌ョ湅</p>
+            <h2>阅读精读</h2>
+            <p>英文原文、中文翻译与重点词汇同步展示。</p>
           </div>
 
           <div class="q-row stretch">
             <h3 id="reading-title"></h3>
-            <button id="next-reading" class="ghost-btn">鎹㈡枃绔?/button>
+            <button id="next-reading" class="ghost-btn">换文章</button>
           </div>
 
           <div class="reading-grid">
             <div class="reading-main">
               <h4>English</h4>
               <p id="reading-en"></p>
-              <h4>涓枃缈昏瘧</h4>
+              <h4>中文翻译</h4>
               <p id="reading-cn"></p>
             </div>
             <aside>
-              <h4>閲嶇偣璇嶆眹</h4>
+              <h4>重点词汇</h4>
               <ul id="reading-words"></ul>
             </aside>
           </div>
@@ -140,25 +225,27 @@
 
         <section id="tab-wrongbook" class="tab-panel">
           <div class="section-head">
-            <h2>閿欓鏈?/ 闅惧彞鏈?/h2>
-            <p>鑷姩璁板綍閿欓锛屾墜鍔ㄦ敹钘忛毦鍙?/p>
+            <h2>错题本 / 难句本</h2>
+            <p>自动沉淀错题，支持一键清空。</p>
           </div>
 
           <div class="wrongbook-layout">
             <div>
-              <h4>璇嶆眹閿欓</h4>
+              <h4>词汇错题</h4>
               <ul id="wrong-vocab"></ul>
             </div>
             <div>
-              <h4>闅惧彞鏀惰棌</h4>
+              <h4>难句收藏</h4>
               <ul id="hard-sentences"></ul>
             </div>
           </div>
-          <button id="clear-wrongbook" class="ghost-btn danger">娓呯┖璁板綍</button>
+          <button id="clear-wrongbook" class="ghost-btn danger">清空记录</button>
         </section>
       </main>
     </div>
   </div>
+
+  <div id="toast" class="toast"></div>
 
   <script src="./app.js"></script>
 </body>
