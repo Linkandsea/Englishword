@@ -338,18 +338,27 @@ function renderAnalysis() {
 }
 
 function bindHoldTranslateEvents() {
-  const start = () => {
+  const start = (e) => {
+    if (e && typeof e.preventDefault === "function") {
+      e.preventDefault();
+    }
+    document.body.classList.add("no-select");
     clearTimeout(state.holdTimer);
     state.holdTimer = setTimeout(showAnalysisTranslation, 280);
   };
 
-  const end = () => {
+  const end = (e) => {
+    if (e && typeof e.preventDefault === "function") {
+      e.preventDefault();
+    }
+    document.body.classList.remove("no-select");
     clearTimeout(state.holdTimer);
     hideAnalysisTranslation();
   };
 
+  el.holdTranslate.addEventListener("contextmenu", (e) => e.preventDefault());
   el.holdTranslate.addEventListener("mousedown", start);
-  el.holdTranslate.addEventListener("touchstart", start, { passive: true });
+  el.holdTranslate.addEventListener("touchstart", start, { passive: false });
   el.holdTranslate.addEventListener("mouseup", end);
   el.holdTranslate.addEventListener("mouseleave", end);
   el.holdTranslate.addEventListener("touchend", end);

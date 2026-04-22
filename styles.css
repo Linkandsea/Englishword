@@ -387,6 +387,18 @@ button { font-family: inherit; }
   color: var(--muted);
 }
 
+#hold-translate {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.no-select,
+.no-select * {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
 .analysis-sentence { margin: 10px 0 2px; line-height: 1.65; font-size: 18px; }
 .analysis-translation-wrap {
   display: none;
