@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Why Sleep Matters for Learning",
+    "en": "Many college students assume that staying up late gives them more study time. However, recent studies show that poor sleep can weaken memory and reduce attention, which means students may spend more time studying but remember less. Experts suggest going to bed at a regular time and reviewing key points briefly before sleep. This routine helps the brain organize information and improves long-term recall.",
+    "cn": "许多大学生认为熬夜能增加学习时间。然而，近期研究表明，睡眠不足会削弱记忆并降低注意力，这意味着学生可能花了更多时间学习却记住更少。专家建议固定作息，并在睡前简短复习要点。这样的习惯有助于大脑整理信息并提升长期记忆。",
+    "vocab": [
+      { "word": "assume", "meaning": "认为；假设" },
+      { "word": "weaken", "meaning": "削弱" },
+      { "word": "attention", "meaning": "注意力" },
+      { "word": "routine", "meaning": "惯例；日常习惯" },
+      { "word": "recall", "meaning": "回忆；记起" }
+    ]
+  },
+  {
+    "title": "Internship and Career Readiness",
+    "en": "An internship is more than a line on a resume. It allows students to observe how teams communicate, solve unexpected problems, and deliver work on deadline. Even when tasks seem simple, interns who ask clear questions and document what they learn often improve quickly. By the end of the internship, students usually gain practical confidence that classroom lectures alone cannot provide.",
+    "cn": "实习不仅仅是简历上的一行经历。它让学生观察团队如何沟通、如何解决突发问题以及如何按时交付任务。即使任务看起来简单，那些会提出清晰问题并记录所学内容的实习生通常进步更快。到实习结束时，学生往往能获得课堂讲授难以单独提供的实践自信。",
+    "vocab": [
+      { "word": "internship", "meaning": "实习" },
+      { "word": "deadline", "meaning": "截止日期" },
+      { "word": "document", "meaning": "记录" },
+      { "word": "practical", "meaning": "实践的" },
+      { "word": "confidence", "meaning": "自信" }
+    ]
+  }
+]

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>CET4 Sprint</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="bg-shape bg-shape-a"></div>
+  <div class="bg-shape bg-shape-b"></div>
+  <header class="topbar">
+    <div class="brand">CET4 Sprint</div>
+    <div class="meta">冲刺四级 · 全平台可用</div>
+  </header>
+
+  <main class="layout">
+    <aside class="side-nav">
+      <button class="nav-btn active" data-tab="vocab">词汇选择</button>
+      <button class="nav-btn" data-tab="analysis">长难句分析</button>
+      <button class="nav-btn" data-tab="translate">中汉互译</button>
+      <button class="nav-btn" data-tab="reading">阅读精读</button>
+      <button class="nav-btn" data-tab="wrongbook">错题本</button>
+    </aside>
+
+    <section class="panel-area">
+      <section id="tab-vocab" class="tab-panel active">
+        <div class="section-head">
+          <h1>四级词汇选择题</h1>
+          <p>答对自动下一题，答错自动加入错题本。</p>
+        </div>
+        <div class="stats">
+          <div>总题数: <span id="v-total">0</span></div>
+          <div>当前: <span id="v-index">0</span></div>
+          <div>正确: <span id="v-correct">0</span></div>
+          <div>错误: <span id="v-wrong">0</span></div>
+        </div>
+        <article class="question-card">
+          <div class="q-row">
+            <div class="q-word" id="q-word">loading...</div>
+            <button id="speak-btn" class="ghost-btn">听发音</button>
+          </div>
+          <p class="q-tip">请选择最准确的中文释义</p>
+          <div id="options" class="option-list"></div>
+          <div id="q-feedback" class="feedback"></div>
+        </article>
+      </section>
+
+      <section id="tab-analysis" class="tab-panel">
+        <div class="section-head">
+          <h1>长难句分析</h1>
+          <p>系统给你句子，并演示拆分方法。</p>
+        </div>
+        <article class="analysis-wrap">
+          <button id="next-analysis" class="ghost-btn">换一句</button>
+          <h2 id="analysis-sentence"></h2>
+          <div class="analysis-grid">
+            <div>
+              <h3>结构拆解</h3>
+              <p id="analysis-structure"></p>
+            </div>
+            <div>
+              <h3>逐步理解</h3>
+              <ol id="analysis-steps"></ol>
+            </div>
+          </div>
+          <h3>参考翻译</h3>
+          <p id="analysis-cn"></p>
+        </article>
+      </section>
+
+      <section id="tab-translate" class="tab-panel">
+        <div class="section-head">
+          <h1>中汉互译训练</h1>
+          <p>系统随机给中译英/英译中，输入后查看参考答案。</p>
+        </div>
+        <article class="translate-wrap">
+          <div class="q-row">
+            <div id="tr-direction" class="pill"></div>
+            <button id="next-translate" class="ghost-btn">换题</button>
+          </div>
+          <p id="tr-prompt" class="translate-prompt"></p>
+          <textarea id="tr-answer" placeholder="在这里输入你的翻译..."></textarea>
+          <div class="q-row">
+            <button id="check-translate" class="solid-btn">查看参考</button>
+            <button id="mark-hard" class="ghost-btn">加入难句本</button>
+          </div>
+          <div id="tr-ref" class="feedback"></div>
+        </article>
+      </section>
+
+      <section id="tab-reading" class="tab-panel">
+        <div class="section-head">
+          <h1>阅读精读</h1>
+          <p>英文原文 + 中文翻译 + 生词侧栏。</p>
+        </div>
+        <article class="reading-wrap">
+          <div class="q-row">
+            <h2 id="reading-title"></h2>
+            <button id="next-reading" class="ghost-btn">换文章</button>
+          </div>
+          <div class="reading-grid">
+            <div>
+              <h3>English</h3>
+              <p id="reading-en"></p>
+              <h3>中文翻译</h3>
+              <p id="reading-cn"></p>
+            </div>
+            <aside>
+              <h3>可能不认识的词</h3>
+              <ul id="reading-words"></ul>
+            </aside>
+          </div>
+        </article>
+      </section>
+
+      <section id="tab-wrongbook" class="tab-panel">
+        <div class="section-head">
+          <h1>错题本 / 难句本</h1>
+          <p>自动沉淀做错词汇和手动标记难句。</p>
+        </div>
+        <article class="wrongbook-wrap">
+          <h3>词汇错题</h3>
+          <ul id="wrong-vocab"></ul>
+          <h3>难句收藏</h3>
+          <ul id="hard-sentences"></ul>
+          <button id="clear-wrongbook" class="ghost-btn danger">清空错题本</button>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

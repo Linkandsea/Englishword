@@ -1,0 +1,35 @@
+[
+  {
+    "sentence": "Although many students believe that memorizing word lists is enough, those who practice words in context tend to retain them longer and use them more accurately in writing.",
+    "structure": "让步从句 + 主句 + 并列谓语",
+    "steps": [
+      "先找主干：those ... tend to retain and use ...",
+      "开头 Although 引导让步从句，表达“尽管很多学生认为……”。",
+      "主句中 who practice words in context 是定语从句，修饰 those。",
+      "retain 和 use 是并列动作，分别对应“记得更久”和“使用更准确”。"
+    ],
+    "translation": "尽管许多学生认为背词表就够了，但那些在语境中练习单词的人往往记得更久，并且在写作中使用得更准确。"
+  },
+  {
+    "sentence": "The report, which was published after a year-long survey involving thousands of participants, suggests that sleep quality affects not only memory but also decision-making.",
+    "structure": "主句 + 非限制性定语从句 + not only ... but also ...",
+    "steps": [
+      "先读主句：The report suggests that ...",
+      "which was published ... 是插入的非限制性定语从句，补充 report 背景。",
+      "that 从句是 suggest 的宾语从句。",
+      "not only memory but also decision-making 表示并列强调。"
+    ],
+    "translation": "这份在一项历时一年、涉及数千名参与者的调查后发布的报告表明，睡眠质量不仅影响记忆，也影响决策。"
+  },
+  {
+    "sentence": "If universities fail to provide practical training that matches market demand, graduates may find it difficult to secure jobs even when the economy is recovering.",
+    "structure": "条件状语从句 + 主句 + 时间让步状语",
+    "steps": [
+      "If 引导条件句，先确定条件部分。",
+      "that matches market demand 是定语从句，修饰 practical training。",
+      "主句核心：graduates may find it difficult to secure jobs。",
+      "even when the economy is recovering 表示“即使在经济复苏时”。"
+    ],
+    "translation": "如果大学没能提供与市场需求匹配的实践训练，毕业生即便在经济复苏时也可能很难找到工作。"
+  }
+]

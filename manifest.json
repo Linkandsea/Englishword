@@ -1,0 +1,9 @@
+{
+  "name": "CET4 Sprint",
+  "short_name": "CET4",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": []
+}

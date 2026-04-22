@@ -1,0 +1,27 @@
+[
+  {
+    "direction": "中译英",
+    "prompt": "尽管任务很复杂，我们仍然需要在有限时间内提出可执行的方案。",
+    "reference": "Although the task is complex, we still need to propose an executable plan within limited time."
+  },
+  {
+    "direction": "英译中",
+    "prompt": "What distinguishes successful learners from others is not talent, but the ability to build consistent habits.",
+    "reference": "把成功学习者与他人区分开来的不是天赋，而是建立持续习惯的能力。"
+  },
+  {
+    "direction": "中译英",
+    "prompt": "如果你只记住单词而忽视语境，你在写作中就可能频繁犯错。",
+    "reference": "If you memorize words but ignore context, you may make frequent mistakes in writing."
+  },
+  {
+    "direction": "英译中",
+    "prompt": "The proposal was rejected because it failed to explain how the risks would be managed in practice.",
+    "reference": "该提案被否决了，因为它没有说明在实践中如何管理风险。"
+  },
+  {
+    "direction": "中译英",
+    "prompt": "研究表明，能够主动复盘的人通常更容易在压力下保持稳定表现。",
+    "reference": "Research shows that people who review proactively are usually more likely to maintain stable performance under pressure."
+  }
+]
