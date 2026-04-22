@@ -1,3 +1,6 @@
+const API_BASE = "./api";
+const USER_ID = "default";
+
 const state = {
   vocab: [],
   vocabIndex: 0,
@@ -10,7 +13,8 @@ const state = {
   translateIndex: 0,
   readingList: [],
   readingIndex: 0,
-  wrongbook: loadWrongbook()
+  wrongbook: { vocab: [], hardSentences: [] },
+  saveTimer: null
 };
 
 const el = {
@@ -43,23 +47,26 @@ const el = {
   nextReading: document.getElementById("next-reading"),
   wrongVocab: document.getElementById("wrong-vocab"),
   hardSentences: document.getElementById("hard-sentences"),
-  clearWrongbook: document.getElementById("clear-wrongbook")
+  clearWrongbook: document.getElementById("clearWrongbook") || document.getElementById("clear-wrongbook")
 };
 
 init();
 
 async function init() {
-  const [vocab, analysis, translate, reading] = await Promise.all([
+  const [vocab, analysis, translate, reading, profile] = await Promise.all([
     fetchJSON("./data/cet4-vocab.json"),
     fetchJSON("./data/long-sentence-analysis.json"),
     fetchJSON("./data/translation-drills.json"),
-    fetchJSON("./data/reading-passages.json")
+    fetchJSON("./data/reading-passages.json"),
+    fetchProfile()
   ]);
 
   state.vocab = shuffle(vocab);
   state.analysisList = analysis;
   state.translateList = translate;
   state.readingList = reading;
+
+  applyProfile(profile);
 
   bindEvents();
   renderVocabQuestion();
@@ -92,7 +99,8 @@ function bindEvents() {
 
   el.checkTranslate.addEventListener("click", () => {
     const item = state.translateList[state.translateIndex];
-    el.trRef.innerHTML = `你的答案：${escapeHTML(el.trAnswer.value || "(未填写)")}<br>参考：${escapeHTML(item.reference)}`;
+    const myAnswer = escapeHTML(el.trAnswer.value || "(未填写)");
+    el.trRef.innerHTML = `你的答案：${myAnswer}<br>参考：${escapeHTML(item.reference)}`;
   });
 
   el.markHard.addEventListener("click", () => {
@@ -111,11 +119,14 @@ function bindEvents() {
     renderReading();
   });
 
-  el.clearWrongbook.addEventListener("click", () => {
-    state.wrongbook = { vocab: [], hardSentences: [] };
-    persistWrongbook();
-    renderWrongbook();
-  });
+  if (el.clearWrongbook) {
+    el.clearWrongbook.addEventListener("click", async () => {
+      state.wrongbook = { vocab: [], hardSentences: [] };
+      persistWrongbook();
+      renderWrongbook();
+      queueSaveProfile();
+    });
+  }
 }
 
 function switchTab(tab) {
@@ -154,7 +165,7 @@ function handleSelect(selected, button) {
   if (selected === question.correct) {
     button.classList.add("correct");
     state.correct += 1;
-    el.feedback.innerHTML = `<span class="ok">正确，自动进入下一题...</span>`;
+    el.feedback.innerHTML = '<span class="ok">正确，自动进入下一题...</span>';
   } else {
     button.classList.add("wrong");
     const answerBtn = buttons.find((b) => b.textContent.includes(question.correct));
@@ -170,6 +181,7 @@ function handleSelect(selected, button) {
   setTimeout(() => {
     state.vocabIndex = (state.vocabIndex + 1) % state.vocab.length;
     renderVocabQuestion();
+    queueSaveProfile();
   }, 800);
 }
 
@@ -257,22 +269,104 @@ function fetchJSON(path) {
   return fetch(path).then((r) => r.json());
 }
 
-function loadWrongbook() {
+async function fetchProfile() {
   try {
-    const raw = localStorage.getItem("cet4_wrongbook");
-    if (!raw) return { vocab: [], hardSentences: [] };
-    return JSON.parse(raw);
+    const res = await fetch(`${API_BASE}/progress/${USER_ID}`);
+    if (!res.ok) throw new Error("profile api failed");
+    return await res.json();
   } catch {
+    return loadProfileFromLocal();
+  }
+}
+
+function applyProfile(profile) {
+  if (!profile || typeof profile !== "object") return;
+  state.vocabIndex = Number.isInteger(profile.vocabIndex) ? profile.vocabIndex : 0;
+  state.correct = Number.isInteger(profile.correct) ? profile.correct : 0;
+  state.wrong = Number.isInteger(profile.wrong) ? profile.wrong : 0;
+  state.wrongbook = normalizeWrongbook(profile.wrongbook);
+}
+
+function normalizeWrongbook(input) {
+  if (!input || typeof input !== "object") {
     return { vocab: [], hardSentences: [] };
+  }
+
+  const vocab = Array.isArray(input.vocab)
+    ? input.vocab
+        .filter((item) => item && typeof item.word === "string" && typeof item.answer === "string")
+        .map((item) => ({ word: item.word, answer: item.answer }))
+    : [];
+
+  const hardSentences = Array.isArray(input.hardSentences)
+    ? input.hardSentences.filter((item) => typeof item === "string")
+    : [];
+
+  return { vocab, hardSentences };
+}
+
+function loadProfileFromLocal() {
+  try {
+    const raw = localStorage.getItem("cet4_profile");
+    if (!raw) return { vocabIndex: 0, correct: 0, wrong: 0, wrongbook: { vocab: [], hardSentences: [] } };
+    const parsed = JSON.parse(raw);
+    return {
+      vocabIndex: Number.isInteger(parsed.vocabIndex) ? parsed.vocabIndex : 0,
+      correct: Number.isInteger(parsed.correct) ? parsed.correct : 0,
+      wrong: Number.isInteger(parsed.wrong) ? parsed.wrong : 0,
+      wrongbook: normalizeWrongbook(parsed.wrongbook)
+    };
+  } catch {
+    return { vocabIndex: 0, correct: 0, wrong: 0, wrongbook: { vocab: [], hardSentences: [] } };
   }
 }
 
 function persistWrongbook() {
-  localStorage.setItem("cet4_wrongbook", JSON.stringify(state.wrongbook));
+  queueSaveProfile();
+}
+
+function persistProfileToLocal() {
+  const payload = {
+    vocabIndex: state.vocabIndex,
+    correct: state.correct,
+    wrong: state.wrong,
+    wrongbook: state.wrongbook,
+    updatedAt: new Date().toISOString()
+  };
+  localStorage.setItem("cet4_profile", JSON.stringify(payload));
+}
+
+function queueSaveProfile() {
+  persistProfileToLocal();
+  if (state.saveTimer) {
+    clearTimeout(state.saveTimer);
+  }
+  state.saveTimer = setTimeout(() => {
+    saveProfile().catch(() => {});
+  }, 300);
+}
+
+async function saveProfile() {
+  const payload = {
+    vocabIndex: state.vocabIndex,
+    correct: state.correct,
+    wrong: state.wrong,
+    wrongbook: state.wrongbook
+  };
+
+  const res = await fetch(`${API_BASE}/progress/${USER_ID}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) {
+    throw new Error("save profile failed");
+  }
 }
 
 function escapeHTML(input) {
-  return input
+  return String(input)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
