@@ -237,6 +237,32 @@ button {
   gap: 14px;
 }
 
+.analysis-original-wrap,
+.analysis-translation-wrap {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  background: #fafcfd;
+}
+
+.analysis-sentence {
+  margin: 10px 0 2px;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.analysis-translation-wrap .analysis-translation {
+  margin: 10px 0 2px;
+  line-height: 1.65;
+  color: #0f2a19;
+  display: none;
+}
+
+.analysis-translation-wrap.show-translation .analysis-translation {
+  display: block;
+}
+
 textarea {
   width: 100%;
   min-height: 130px;

@@ -15,44 +15,44 @@
         <div class="logo-dot" aria-hidden="true"></div>
         <div>
           <h1 class="brand-title">CET4 Sprint</h1>
-          <p class="brand-sub">四级词汇训练系统</p>
+          <p class="brand-sub">鍥涚骇璇嶆眹璁粌绯荤粺</p>
         </div>
       </div>
       <div class="status-pill">
         <span class="dot"></span>
-        <span>学习中</span>
+        <span>瀛︿範涓?/span>
       </div>
     </header>
 
     <div class="workspace">
-      <aside class="side-nav" aria-label="主要功能">
-        <button class="nav-btn active" data-tab="vocab">词汇选择</button>
-        <button class="nav-btn" data-tab="analysis">长难句分析</button>
-        <button class="nav-btn" data-tab="translate">中英互译</button>
-        <button class="nav-btn" data-tab="reading">阅读精读</button>
-        <button class="nav-btn" data-tab="wrongbook">错题本</button>
+      <aside class="side-nav" aria-label="涓昏鍔熻兘">
+        <button class="nav-btn active" data-tab="vocab">璇嶆眹閫夋嫨</button>
+        <button class="nav-btn" data-tab="analysis">闀块毦鍙ュ垎鏋?/button>
+        <button class="nav-btn" data-tab="translate">涓嫳浜掕瘧</button>
+        <button class="nav-btn" data-tab="reading">闃呰绮捐</button>
+        <button class="nav-btn" data-tab="wrongbook">閿欓鏈?/button>
       </aside>
 
       <main class="panel-area" aria-live="polite">
         <section id="tab-vocab" class="tab-panel active">
           <div class="section-head">
-            <h2>词汇选择题</h2>
-            <p>答对自动下一题，答错自动加入错题本</p>
+            <h2>璇嶆眹閫夋嫨棰?/h2>
+            <p>绛斿鑷姩涓嬩竴棰橈紝绛旈敊鑷姩鍔犲叆閿欓鏈?/p>
           </div>
 
           <div class="stats">
-            <div><span>总题数</span><strong id="v-total">0</strong></div>
-            <div><span>当前</span><strong id="v-index">0</strong></div>
-            <div><span>正确</span><strong id="v-correct">0</strong></div>
-            <div><span>错误</span><strong id="v-wrong">0</strong></div>
+            <div><span>鎬婚鏁?/span><strong id="v-total">0</strong></div>
+            <div><span>褰撳墠</span><strong id="v-index">0</strong></div>
+            <div><span>姝ｇ‘</span><strong id="v-correct">0</strong></div>
+            <div><span>閿欒</span><strong id="v-wrong">0</strong></div>
           </div>
 
           <div class="question-area">
             <div class="q-row">
               <div class="q-word" id="q-word">loading...</div>
-              <button id="speak-btn" class="ghost-btn">发音</button>
+              <button id="speak-btn" class="ghost-btn">鍙戦煶</button>
             </div>
-            <p class="q-tip">请选择最准确的中文释义</p>
+            <p class="q-tip">璇烽€夋嫨鏈€鍑嗙‘鐨勪腑鏂囬噴涔?/p>
             <div id="options" class="option-list"></div>
             <div id="q-feedback" class="feedback"></div>
           </div>
@@ -61,12 +61,7 @@
         <section id="tab-analysis" class="tab-panel">
           <div class="section-head">
             <h2>长难句分析</h2>
-            <p>按结构拆解，再看分步理解</p>
-          </div>
-
-          <div class="q-row stretch">
-            <h3 id="analysis-sentence"></h3>
-            <button id="next-analysis" class="ghost-btn">换一句</button>
+            <p>先看分析，再看原文，长按查看翻译</p>
           </div>
 
           <div class="analysis-grid">
@@ -80,51 +75,64 @@
             </div>
           </div>
 
-          <h4>参考翻译</h4>
-          <p id="analysis-cn"></p>
+          <div class="analysis-original-wrap">
+            <div class="q-row stretch">
+              <h4>原文</h4>
+              <button id="next-analysis" class="ghost-btn">换一句</button>
+            </div>
+            <p id="analysis-sentence" class="analysis-sentence"></p>
+          </div>
+
+          <div class="analysis-translation-wrap">
+            <div class="q-row stretch">
+              <h4>翻译</h4>
+              <button id="hold-translate" class="ghost-btn">长按显示翻译</button>
+            </div>
+            <p id="analysis-cn" class="analysis-translation"></p>
+          </div>
         </section>
 
         <section id="tab-translate" class="tab-panel">
           <div class="section-head">
-            <h2>中英互译训练</h2>
-            <p>先自己翻译，再查看参考答案</p>
+            <h2>涓嫳浜掕瘧璁粌</h2>
+            <p>鍏堣嚜宸辩炕璇戯紝鍐嶆煡鐪嬪弬鑰冪瓟妗?/p>
           </div>
 
           <div class="q-row stretch">
             <div id="tr-direction" class="pill"></div>
-            <button id="next-translate" class="ghost-btn">换题</button>
+            <button id="next-translate" class="ghost-btn">鎹㈤</button>
           </div>
 
           <p id="tr-prompt" class="translate-prompt"></p>
-          <textarea id="tr-answer" placeholder="在这里输入你的翻译..."></textarea>
+          <textarea id="tr-answer" placeholder="鍦ㄨ繖閲岃緭鍏ヤ綘鐨勭炕璇?.."></textarea>
 
           <div class="q-row">
-            <button id="check-translate" class="solid-btn">查看参考</button>
-            <button id="mark-hard" class="ghost-btn">加入难句本</button>
+            <button id="check-translate" class="solid-btn">鏌ョ湅鍙傝€?/button>
+            <button id="mark-hard" class="ghost-btn">鍔犲叆闅惧彞鏈?/button>
           </div>
           <div id="tr-ref" class="feedback"></div>
         </section>
 
         <section id="tab-reading" class="tab-panel">
           <div class="section-head">
-            <h2>阅读精读</h2>
-            <p>英文原文、中文翻译与重点词汇同步查看</p>
+            <h2>闃呰绮捐</h2>
+            <p>鑻辨枃鍘熸枃銆佷腑鏂囩炕璇戜笌閲嶇偣璇嶆眹鍚屾鏌ョ湅</p>
           </div>
 
           <div class="q-row stretch">
             <h3 id="reading-title"></h3>
-            <button id="next-reading" class="ghost-btn">换文章</button>
+            <button id="next-reading" class="ghost-btn">鎹㈡枃绔?/button>
           </div>
 
           <div class="reading-grid">
             <div class="reading-main">
               <h4>English</h4>
               <p id="reading-en"></p>
-              <h4>中文翻译</h4>
+              <h4>涓枃缈昏瘧</h4>
               <p id="reading-cn"></p>
             </div>
             <aside>
-              <h4>重点词汇</h4>
+              <h4>閲嶇偣璇嶆眹</h4>
               <ul id="reading-words"></ul>
             </aside>
           </div>
@@ -132,21 +140,21 @@
 
         <section id="tab-wrongbook" class="tab-panel">
           <div class="section-head">
-            <h2>错题本 / 难句本</h2>
-            <p>自动记录错题，手动收藏难句</p>
+            <h2>閿欓鏈?/ 闅惧彞鏈?/h2>
+            <p>鑷姩璁板綍閿欓锛屾墜鍔ㄦ敹钘忛毦鍙?/p>
           </div>
 
           <div class="wrongbook-layout">
             <div>
-              <h4>词汇错题</h4>
+              <h4>璇嶆眹閿欓</h4>
               <ul id="wrong-vocab"></ul>
             </div>
             <div>
-              <h4>难句收藏</h4>
+              <h4>闅惧彞鏀惰棌</h4>
               <ul id="hard-sentences"></ul>
             </div>
           </div>
-          <button id="clear-wrongbook" class="ghost-btn danger">清空记录</button>
+          <button id="clear-wrongbook" class="ghost-btn danger">娓呯┖璁板綍</button>
         </section>
       </main>
     </div>

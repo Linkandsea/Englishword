@@ -33,6 +33,8 @@ const el = {
   analysisStructure: document.getElementById("analysis-structure"),
   analysisSteps: document.getElementById("analysis-steps"),
   analysisCn: document.getElementById("analysis-cn"),
+  holdTranslate: document.getElementById("hold-translate"),
+  analysisTranslationWrap: document.querySelector(".analysis-translation-wrap"),
   nextAnalysis: document.getElementById("next-analysis"),
   trDirection: document.getElementById("tr-direction"),
   trPrompt: document.getElementById("tr-prompt"),
@@ -92,6 +94,7 @@ function bindEvents() {
     state.analysisIndex = (state.analysisIndex + 1) % state.analysisList.length;
     renderAnalysis();
   });
+  bindHoldTranslateEvents();
 
   el.nextTranslate.addEventListener("click", () => {
     state.translateIndex = (state.translateIndex + 1) % state.translateList.length;
@@ -205,12 +208,52 @@ function renderAnalysis() {
   el.analysisSentence.textContent = item.sentence;
   el.analysisStructure.textContent = item.structure;
   el.analysisCn.textContent = item.translation;
+  hideAnalysisTranslation();
   el.analysisSteps.innerHTML = "";
   item.steps.forEach((step) => {
     const li = document.createElement("li");
     li.textContent = step;
     el.analysisSteps.appendChild(li);
   });
+}
+
+function bindHoldTranslateEvents() {
+  if (!el.holdTranslate || !el.analysisTranslationWrap) return;
+
+  let holdTimer = null;
+
+  const startHold = () => {
+    clearTimeout(holdTimer);
+    holdTimer = setTimeout(() => {
+      showAnalysisTranslation();
+    }, 320);
+  };
+
+  const endHold = () => {
+    clearTimeout(holdTimer);
+    hideAnalysisTranslation();
+  };
+
+  el.holdTranslate.addEventListener("mousedown", startHold);
+  el.holdTranslate.addEventListener("touchstart", startHold, { passive: true });
+  el.holdTranslate.addEventListener("mouseup", endHold);
+  el.holdTranslate.addEventListener("mouseleave", endHold);
+  el.holdTranslate.addEventListener("touchend", endHold);
+  el.holdTranslate.addEventListener("touchcancel", endHold);
+  window.addEventListener("mouseup", endHold);
+  window.addEventListener("touchend", endHold);
+}
+
+function showAnalysisTranslation() {
+  if (!el.analysisTranslationWrap || !el.holdTranslate) return;
+  el.analysisTranslationWrap.classList.add("show-translation");
+  el.holdTranslate.textContent = "已显示翻译";
+}
+
+function hideAnalysisTranslation() {
+  if (!el.analysisTranslationWrap || !el.holdTranslate) return;
+  el.analysisTranslationWrap.classList.remove("show-translation");
+  el.holdTranslate.textContent = "长按显示翻译";
 }
 
 function renderTranslation() {
